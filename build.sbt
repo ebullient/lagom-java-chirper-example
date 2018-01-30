@@ -15,6 +15,15 @@ EclipseKeys.projectFlavor in Global := EclipseProjectFlavor.Java
 
 lazy val buildVersion = sys.props.getOrElse("buildVersion", "1.0.0-SNAPSHOT")
 
+lazy val consulServiceLocator = project("lagom-service-locator-consul-java")
+  .settings(
+    libraryDependencies ++= Seq(
+      lagomJavadslApi,
+      "com.ecwid.consul" % "consul-api" % "1.1.11",
+      "org.slf4j" % "slf4j-simple" % "1.7.25"
+    )
+  )
+
 lazy val friendApi = project("friend-api")
   .settings(
     version := buildVersion,
@@ -81,7 +90,8 @@ lazy val chirpImpl = project("chirp-impl")
   )
   .settings(BuildTarget.additionalSettings)
   .settings(lagomForkedTestSettings: _*)
-  .dependsOn(chirpApi)
+  .dependsOn(chirpApi,consulServiceLocator)
+
 
 lazy val activityStreamApi = project("activity-stream-api")
   .settings(
@@ -114,7 +124,7 @@ lazy val activityStreamImpl = project("activity-stream-impl")
     )
   )
   .settings(BuildTarget.additionalSettings)
-  .dependsOn(activityStreamApi, chirpApi, friendApi)
+  .dependsOn(activityStreamApi, chirpApi, friendApi, consulServiceLocator)
 
 lazy val frontEnd = project("front-end")
   .enablePlugins(PlayJava, LagomPlay)

@@ -4,6 +4,7 @@ object BuildTarget {
   private sealed trait DeploymentRuntime
   private case object ConductR extends DeploymentRuntime
   private case object Kubernetes extends DeploymentRuntime
+  private case object Compose extends DeploymentRuntime
   private case object Marathon extends DeploymentRuntime
 
   private val deploymentRuntime: DeploymentRuntime = sys.props.get("buildTarget") match {
@@ -13,11 +14,14 @@ object BuildTarget {
     case Some(v) if v.toLowerCase == "kubernetes" =>
       Kubernetes
 
+    case Some(v) if v.toLowerCase == "compose" =>
+      Compose 
+
     case Some(v) if v.toLowerCase == "marathon" =>
       Marathon
 
     case Some(v) =>
-      sys.error(s"The build target $v is not supported. Available: 'conductr', 'kubernetes', 'marathon'")
+      sys.error(s"The build target $v is not supported. Available: 'conductr', 'kubernetes', 'compose', 'marathon'")
 
     case None =>
       ConductR
@@ -30,6 +34,10 @@ object BuildTarget {
           Library.serviceLocatorDns
         ),
         Keys.unmanagedResourceDirectories in Compile += Keys.sourceDirectory.value / "main" / "kubernetes-resources"
+      )
+    case Compose =>
+      Seq(
+        Keys.unmanagedResourceDirectories in Compile += Keys.sourceDirectory.value / "main" / "compose-resources"
       )
     case Marathon   =>
       Seq(
@@ -44,6 +52,7 @@ object BuildTarget {
 
   val dockerRepository: String = deploymentRuntime match {
     case Kubernetes => "chirper"
+    case Compose    => "chirper"
     case Marathon   => "chirper-marathon"
     case ConductR   => "chirper-conductr"
   }

@@ -10,15 +10,9 @@ services:
        - DNS_TCP_ADDR=127.0.0.11
        - DNS_TCP_PORT=53
      ports:
-       - "9000:9000" 
+       - "9000:9000"
      networks:
        - sandbox
-
-#  cassandra:
-#    image: cassandra:2.1
-#    container_name: cassandra
-#    networks:
-#      - sandbox
 
   cassandra:
     image: gcr.io/google-samples/cassandra:v12
@@ -45,9 +39,6 @@ services:
   activityservice:
     image: chirper/activity-stream-impl
     container_name: activityservice
-#    ports:
-#      - "9000:9000"
-#      - "2551:2551"
     environment:
       - APPLICATION_SECRET=fish
       - CASSANDRA_HOST=cassandra
@@ -60,17 +51,13 @@ services:
       - AKKA_SEED_NODES=activityservice:2551
       - CONSUL=locator
     networks:
-      - sandbox      
-   
+      - sandbox
+
   chirpservice:
     image: chirper/chirp-impl
     container_name: chirpservice
-#    ports:
-#      - "9000:9000"
-#      - "2551:2551"
     environment:
       - APPLICATION_SECRET=fish
-      - CASSANDRA_SERVICE_NAME=cassandra
       - CASSANDRA_HOST=cassandra
       - CASSANDRA_PORT=9042
       - CHIRPSERVICE_BIND_PORT=9000
@@ -81,39 +68,33 @@ services:
       - AKKA_SEED_NODES=chirpservice:2551
       - CONSUL=locator
     networks:
-      - sandbox      
-       
+      - sandbox
+
   friendservice:
     image: chirper/friend-impl
     container_name: friend_service
-#    ports:
-#      - "9000:9000"
-#      - "2551:2551"
     environment:
       - APPLICATION_SECRET=fish
-      - CASSANDRA_SERVICE_NAME=cassandra
       - CASSANDRA_HOST=cassandra
       - CASSANDRA_PORT=9042
       - FRIENDSERVICE_BIND_PORT=9000
       - FRIENDSERVICE_BIND_IP=0.0.0.0
       - AKKA_REMOTING_PORT=2551
-      - AKKA_REMOTING_BIND_PORT=2551      
+      - AKKA_REMOTING_BIND_PORT=2551
       - AKKA_REMOTING_HOST=friendservice
       - AKKA_SEED_NODES=friendservice:2551
     networks:
       - sandbox
-      
+
   web:
     image: chirper/front-end
     container_name: web
-#    ports:
-#      - "9000:9000"
     environment:
       - APPLICATION_SECRET=fish
       - WEB_BIND_PORT=9000
-      - WEB_BIND_IP=0.0.0.0  
+      - WEB_BIND_IP=0.0.0.0
     networks:
       - sandbox
-  
+
 networks:
-  sandbox:  
+  sandbox:

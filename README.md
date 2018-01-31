@@ -11,6 +11,14 @@ docker-compose up -d chirpservice friendservice activityservice
 #visit http://localhost:9000/ in a browser 
 ```
 
+if you need nodejs then you can acquire it using
+```
+wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+nvm install --lts
+```
+
 Current status: *FUNCTIONAL*
 
 All looking good =)

@@ -8,11 +8,14 @@ cd deploy/compose
 docker-compose up -d cassandra web locator
 #wait 30 seconds or so..
 docker-compose up -d chirpservice friendservice activityservice
+#visit http://localhost:9000/ in a browser 
 ```
 
 Current status: *FUNCTIONAL*
 
-All looking good =) c
+All looking good =)
 
 Could even look into using docker-compose depends on directives to have the services wait for cassandra/consul =)
+
+
 

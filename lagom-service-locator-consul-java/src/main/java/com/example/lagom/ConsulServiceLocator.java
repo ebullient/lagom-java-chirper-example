@@ -41,6 +41,7 @@ public class ConsulServiceLocator implements ServiceLocator {
     @Override
     public CompletionStage<Optional<URI>> locate(String name, Descriptor.Call<?, ?> serviceCall) {
         log.debug("Unsupported operation, locate with a Descriptor");
+        System.out.println("*WIBBLE**name: "+name+" serviceCall:"+serviceCall.toString());
         return null;
     }
 

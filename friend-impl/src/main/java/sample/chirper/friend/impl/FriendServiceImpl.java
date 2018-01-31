@@ -6,6 +6,7 @@ package sample.chirper.friend.impl;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
+import java.util.concurrent.CompletableFuture;
 
 import javax.inject.Inject;
 
@@ -87,4 +88,8 @@ public class FriendServiceImpl implements FriendService {
     return ref;
   }
 
+  @Override
+  public ServiceCall<NotUsed, String> health() {
+      return (request) -> CompletableFuture.completedFuture("Up and running");
+  }
 }

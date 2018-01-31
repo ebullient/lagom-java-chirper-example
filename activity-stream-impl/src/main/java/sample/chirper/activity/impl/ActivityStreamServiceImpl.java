@@ -16,6 +16,7 @@ import sample.chirper.chirp.api.ChirpService;
 import sample.chirper.chirp.api.HistoricalChirpsRequest;
 import sample.chirper.chirp.api.LiveChirpsRequest;
 import sample.chirper.friend.api.FriendService;
+import java.util.concurrent.CompletableFuture;
 
 import akka.stream.javadsl.Source;
 
@@ -57,4 +58,8 @@ public class ActivityStreamServiceImpl implements ActivityStreamService {
       });
   }
 
+  @Override
+  public ServiceCall<NotUsed, String> health() {
+      return (request) -> CompletableFuture.completedFuture("Up and running");
+  }
 }

@@ -168,4 +168,9 @@ public class LoadTestServiceImpl implements LoadTestService {
       });
     }
   }
+
+  @Override
+  public ServiceCall<NotUsed, String> health() {
+      return (request) -> CompletableFuture.completedFuture("Up and running");
+  }
 }

@@ -73,4 +73,9 @@ public class ChirpServiceImpl implements ChirpService {
             return CompletableFuture.completedFuture(result);
         };
     }
+
+    @Override
+    public ServiceCall<NotUsed, String> health() {
+        return (request) -> CompletableFuture.completedFuture("Up and running");
+    }
 }

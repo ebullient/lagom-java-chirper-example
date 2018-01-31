@@ -54,7 +54,7 @@ lazy val friendImpl = project("friend-impl")
   )
   .settings(BuildTarget.additionalSettings)
   .settings(lagomForkedTestSettings: _*)
-  .dependsOn(friendApi)
+  .dependsOn(friendApi,consulServiceLocator)
 
 lazy val chirpApi = project("chirp-api")
   .settings(
@@ -203,7 +203,7 @@ lazy val loadTestImpl = project("load-test-impl")
     resolvers += bintrayRepo("hseeberger", "maven")
    )
   .settings(BuildTarget.additionalSettings)
-  .dependsOn(loadTestApi, friendApi, activityStreamApi, chirpApi)
+  .dependsOn(loadTestApi, friendApi, activityStreamApi, chirpApi, consulServiceLocator)
 
 def project(id: String) = Project(id, base = file(id))
   .settings(javacOptions in compile ++= Seq("-encoding", "UTF-8", "-source", "1.8", "-target", "1.8", "-Xlint:unchecked", "-Xlint:deprecation"))

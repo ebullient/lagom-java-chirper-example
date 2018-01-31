@@ -5,6 +5,7 @@ package sample.chirper.load.api;
 
 import static com.lightbend.lagom.javadsl.api.Service.named;
 import static com.lightbend.lagom.javadsl.api.Service.namedCall;
+import static com.lightbend.lagom.javadsl.api.Service.pathCall;
 
 import akka.NotUsed;
 import com.lightbend.lagom.javadsl.api.Descriptor;
@@ -28,12 +29,15 @@ public interface LoadTestService extends Service {
    */
   ServiceCall<TestParams, NotUsed> startLoadHeadless();
 
+  ServiceCall<NotUsed, String> health();
+
   @Override
   default Descriptor descriptor() {
     // @formatter:off
     return named("/loadtestservice").withCalls(
         namedCall("/load", this::startLoad),
-        namedCall("/loadHeadless", this::startLoadHeadless)
+        namedCall("/loadHeadless", this::startLoadHeadless),
+        pathCall("/health", this::health)
       );
     // @formatter:on
   }

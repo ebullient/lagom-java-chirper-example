@@ -10,7 +10,9 @@ docker-compose up -d cassandra web locator
 docker-compose up -d chirpservice friendservice activityservice
 ```
 
-Current status: *ALMOST FUNCTIONAL*
+Current status: *FUNCTIONAL*
 
-Seems to be running, except websockets are being rejected due to SecurityPolicy directives.
+All looking good =) c
+
+Could even look into using docker-compose depends on directives to have the services wait for cassandra/consul =)
 

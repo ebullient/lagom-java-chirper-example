@@ -39,6 +39,8 @@ services:
   activityservice:
     image: chirper/activity-stream-impl
     container_name: activityservice
+    ports:
+      - "9090:9000"
     environment:
       - APPLICATION_SECRET=fish
       - CASSANDRA_HOST=cassandra
@@ -72,7 +74,7 @@ services:
 
   friendservice:
     image: chirper/friend-impl
-    container_name: friend_service
+    container_name: friendservice
     environment:
       - APPLICATION_SECRET=fish
       - CASSANDRA_HOST=cassandra

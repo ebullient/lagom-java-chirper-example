@@ -4,7 +4,7 @@ services:
 
   proxy:
      build:
-       context: ../../proxy
+       context: ./proxy
      container_name: proxy
      environment:
        - DNS_TCP_ADDR=127.0.0.11

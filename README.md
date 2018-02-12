@@ -1,5 +1,5 @@
 # lagom-java-chirper-example
-Fork of lagom-java-chirper-example, to use as a sandbox to try to add docker-compose support.
+Fork of lagom-java-chirper-example, to add docker-compose support.
 
 ## Build & test
 
@@ -30,6 +30,8 @@ Could even look into using docker-compose depends on directives to have the serv
 
 ## Differences from original project
 
+- 2h timeout set for websocket based services
+- maven build removed (sbt worked for me, and didn't want to maintain 2 build systems)
 - `proxy` folder has an haproxy docker container that will act as the front door instead of ingress
 - `lagom-service-locator-consul-java` folder is the impl of ServiceLocator that uses consul (still returns null, but that path is never called at the mo)
 - `<servicename>-impl/src/main/compose-resource` folder contains `platform.conf` for running on compose

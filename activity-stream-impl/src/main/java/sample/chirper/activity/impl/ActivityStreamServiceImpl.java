@@ -17,7 +17,9 @@ import sample.chirper.chirp.api.HistoricalChirpsRequest;
 import sample.chirper.chirp.api.LiveChirpsRequest;
 import sample.chirper.friend.api.FriendService;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
+import scala.concurrent.duration.FiniteDuration;
 import akka.stream.javadsl.Source;
 
 public class ActivityStreamServiceImpl implements ActivityStreamService {
@@ -61,5 +63,15 @@ public class ActivityStreamServiceImpl implements ActivityStreamService {
   @Override
   public ServiceCall<NotUsed, String> health() {
       return (request) -> CompletableFuture.completedFuture("Up and running");
+  }
+
+  @Override
+  public ServiceCall<NotUsed, Source<String,?>> infinite() {
+      return (request) -> {
+        FiniteDuration interval = FiniteDuration.create(5, TimeUnit.MINUTES);
+        return CompletableFuture.completedFuture(
+                      Source.tick(interval, interval, "TICK::"+System.currentTimeMillis())
+               );
+      };
   }
 }

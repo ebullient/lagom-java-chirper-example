@@ -21,13 +21,16 @@ public interface ActivityStreamService extends Service {
 
   ServiceCall<NotUsed, String> health();
 
+  ServiceCall<NotUsed, Source<String, ?>> infinite();
+
   @Override
   default Descriptor descriptor() {
     // @formatter:off
     return named("activityservice").withCalls(
         pathCall("/api/activity/:userId/live", this::getLiveActivityStream),
         pathCall("/api/activity/:userId/history", this::getHistoricalActivityStream),
-        pathCall("/health", this::health)
+        pathCall("/health", this::health),
+        pathCall("/infinite", this::infinite)
       ).withAutoAcl(true);
     // @formatter:on
   }

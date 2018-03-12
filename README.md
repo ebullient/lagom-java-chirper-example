@@ -8,8 +8,10 @@ sbt -DbuildTarget=compose clean docker:publishLocal
 cd deploy/compose
 docker-compose up -d cassandra web locator
 #wait 30 seconds or so..
-docker-compose up -d chirpservice friendservice activityservice
-#visit http://localhost:9000/ in a browser 
+docker-compose up -d chirpservice friendservice activityservice proxy
+#wait a bit for those services to launch..
+#visit http://localhost:9000/ in a browser
+#if you see a 503 error, the services haven't finished booting yet, check with `docker-compose ps`, or `docker-compose logs <service-name>`
 ```
 
 If you need nodejs then you can acquire it using

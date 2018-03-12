@@ -11,7 +11,8 @@ docker-compose up -d cassandra web locator
 docker-compose up -d chirpservice friendservice activityservice proxy
 #wait a bit for those services to launch..
 #visit http://localhost:9000/ in a browser
-#if you see a 503 error, the services haven't finished booting yet, check with `docker-compose ps`, or `docker-compose logs <service-name>`
+#if you see a 503 error, the services haven't finished booting yet, 
+#check with `docker-compose ps`, or `docker-compose logs <service-name>`
 ```
 
 If you need nodejs then you can acquire it using

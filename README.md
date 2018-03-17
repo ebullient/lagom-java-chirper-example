@@ -1,29 +1,53 @@
 # lagom-java-chirper-example
 Fork of lagom-java-chirper-example, to add docker-compose support.
 
-## Build & test
+## Running the Chirper Example
 
-```
-sbt -DbuildTarget=compose clean docker:publishLocal
-cd deploy/compose
-docker-compose up -d cassandra web locator
-#wait 30 seconds or so..
-docker-compose up -d chirpservice friendservice activityservice proxy
-#wait a bit for those services to launch..
-#visit http://localhost:9000/ in a browser
-#if you see a 503 error, the services haven't finished booting yet, 
-#check with `docker-compose ps`, or `docker-compose logs <service-name>`
-```
+1. Obtain the source for this repository:
+  * HTTPS: `git clone https://github.com/ebullient/lagom-java-chirper-example.git`
+  * SSH: `git clone git@github.com:ebullient/lagom-java-chirper-example.git`
 
-If you need nodejs then you can acquire it using
-```
-wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-nvm install --lts
-```
+2. Change to the lagom-java-chirper-example directory
 
-## Status
+        $ cd lagom-java-chirper-example        # cd to project directory
+        $ eval $(./deploy/compose/run.sh env)  # set command aliases
+        $ alias                                # think-run and think-compose
+
+3. Pull and build initial images required for running the system.
+
+        $ think-compose pull         # Use docker-compose to pull base images
+        $ think-compose build proxy  # Use docker-compose to build a proxy image
+
+4. Make sure you have node.js. If you don't, this is one way to get it:
+
+        $ wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+        $ export NVM_DIR="$HOME/.nvm"
+        $ [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+        $ nvm install --lts
+
+4. Compile any image updates:
+
+        $ sbt -DbuildTarget=compose clean docker:publishLocal
+
+5. Start the chirper service (as a collection of containers):
+
+        $ think-run start
+
+6. Wait for the system to start.
+
+        $ think-run wait
+
+OR
+
+        $ think-compose logs
+
+7. Do some things!!
+
+8. Stop the system
+
+        $ think-run stop
+
+## Project Status
 
 Current status: *FUNCTIONAL*
 
@@ -31,7 +55,7 @@ All looking good =)
 
 Could even look into using docker-compose depends on directives to have the services wait for cassandra/consul =)
 
-## Differences from original project
+## Differences from original (lagom) project
 
 - 2h timeout set for websocket based services
 - maven build removed (sbt worked for me, and didn't want to maintain 2 build systems)
